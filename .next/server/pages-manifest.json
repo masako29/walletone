@@ -1,7 +1,11 @@
 {
-  "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
+  "/api/keystore": "pages/api/keystore.js",
+  "/api/phrase": "pages/api/phrase.js",
+  "/api/privateKey": "pages/api/privateKey.js",
+  "/dapps": "pages/dapps.html",
+  "/": "pages/index.html",
+  "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/dapps": "pages/dapps.js"
+  "/404": "pages/404.html"
 }
