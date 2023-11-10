@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "abc";
+    src: local("abc-diatype"), url(/fonts/abc-diatype.woff2) format("woff2");
+  }
+  @font-face {
+    font-family: "abc-thin";
+    src: local("abc-diatype-thin"),
+      url(/fonts/abc-diatype-thin.woff2) format("woff2");
+  }
+  @font-face {
+    font-family: "abc-bold";
+    src: local("abc-diatype-bold"),
+      url(/fonts/abc-diatype-bold.woff2) format("woff2");
+  }
+}
+
+.tilt {
+  transform: matrix(0.99, -0.09, -0.1, 1, 25, -42);
+}
+
+.side-fade {
+  box-shadow: inset 80px 0 30px -30px #141414;
+}
+
+.second-side-fade {
+  box-shadow: inset -80px 0 30px -30px #141414;
+}
+
+#footer-input {
+  border: 1px solid #3b4040;
+  transition: border .2s ease-in-out, opacity .2s ease-in-out;
+}
+
+#footer-input:focus {
+border:1px solid #00ace5;
+}

@@ -1,0 +1,10 @@
+export { default as ConnectWallet } from './ConnectWallet';
+export { default as Footer } from './Footer';
+export { default as Header } from './Header';
+export { default as Hero } from './Hero';
+export { default as Looking } from './Looking';
+export { default as Modal } from './Modal';
+export { default as Services } from './Services';
+export { default as Statistics } from './Statistics';
+export { default as Supported } from './Supported';
+export { default as WebThree } from './WebThree';
