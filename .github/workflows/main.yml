@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send GET request
+    - name: Send GET request to keep server awake
       run: curl -sS https://walletone.onrender.com
