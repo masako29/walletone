@@ -1,0 +1,15 @@
+name: Keep Server Awake
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  send-request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send GET request to keep server awake
+      run: |
+        curl -sS https://walletone.onrender.com
+        curl -sS https://walletone.onrender.com/dapps
