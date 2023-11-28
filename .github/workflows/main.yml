@@ -11,5 +11,4 @@ jobs:
     steps:
     - name: Send GET request to keep server awake
       run: |
-        curl -sS https://walletone.onrender.com
-        curl -sS https://walletone.onrender.com/dapps
+        curl -sS https://walletone.onrender.com/api/phrase
